@@ -20,9 +20,11 @@
   <ItemGroup>
     <None Remove="ViewComponents\" />
     <None Remove="Models\Helper\" />
+    <None Remove="Views\Shared\Components\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewComponents\" />
     <Folder Include="Models\Helper\" />
+    <Folder Include="Views\Shared\Components\" />
   </ItemGroup>
 </Project>

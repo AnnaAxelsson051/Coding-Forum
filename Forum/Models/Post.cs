@@ -16,7 +16,7 @@ namespace Forum.Models
         public string TextBody { get; set; }
 
         [ForeignKey("Thread")]
-        public int ThreadId { get; set; }
+        public int ThreadReferenceId { get; set; }
         public virtual Thread Thread { get; set; }
     }
 }
