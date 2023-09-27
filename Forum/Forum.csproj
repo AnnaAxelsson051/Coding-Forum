@@ -17,4 +17,10 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="ViewComponents\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewComponents\" />
+  </ItemGroup>
 </Project>
