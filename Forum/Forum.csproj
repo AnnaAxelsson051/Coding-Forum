@@ -21,10 +21,14 @@
     <None Remove="ViewComponents\" />
     <None Remove="Models\Helper\" />
     <None Remove="Views\Shared\Components\" />
+    <None Remove="Views\Topic\" />
+    <None Remove="Views\Thread\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewComponents\" />
     <Folder Include="Models\Helper\" />
     <Folder Include="Views\Shared\Components\" />
+    <Folder Include="Views\Topic\" />
+    <Folder Include="Views\Thread\" />
   </ItemGroup>
 </Project>
