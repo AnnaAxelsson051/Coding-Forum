@@ -1,6 +1,21 @@
 ﻿@model Forum.Models.ThreadPostViewModel 
 
 <div>
-    <form asp-action="Create" method="post">
+    <form asp-action="AddPost" method="post">
+        <input type="hidden" asp-for="ThreadReferenceId" value="@Model.ThreadReferenceId" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-inner-container">
+            <label asp-for="PostTitle" class="control-label"></label>
+            <input asp-for="PostTitle" class="form-control" />
+            <span asp-validation-for="PostTitle" class="text-danger"></span>
+        </div>
+        <div class="form-inner-container">
+            <label asp-for="TextBody" class="control-label"></label>
+            <textarea asp-for="TextBody" class="form-control"></textarea>
+            <span asp-validation-for="TextBody" class="text-danger"></span>
+        </div>
+        <div class="form-inner-container">
+            <input asp-controller="Post" asp-action="AddPost" type="submit" value="Skapa" class="btn btn-primary" />
+        </div>
     </form>
 </div>

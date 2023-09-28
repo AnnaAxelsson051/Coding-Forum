@@ -11,8 +11,10 @@ namespace Forum.Models
 
         }
 
+        public DbSet<Post> Post { get; set; }
+
+    
     }
 }
-
 
 

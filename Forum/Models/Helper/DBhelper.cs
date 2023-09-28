@@ -9,6 +9,12 @@ namespace Forum.Models.Helper
         {
             _context = context;
         }
+
+        public void AddPost(Post newpost)
+        {
+            _context.Post.Add(newpost);
+            _context.SaveChanges();
+        }
     }
 }
 
