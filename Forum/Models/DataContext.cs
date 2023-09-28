@@ -12,8 +12,9 @@ namespace Forum.Models
         }
 
         public DbSet<Post> Post { get; set; }
+        public DbSet<Topic> Topic { get; set; }
+        public DbSet<Thread> Thread { get; set; }
 
-    
     }
 }
 
