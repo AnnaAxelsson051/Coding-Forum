@@ -39,25 +39,63 @@ namespace Forum.Models.Helper
         // their thread IDs, headings, and topic reference IDs in a
         // TopicThreadViewModel format
 
-        public List<TopicThreadViewModel> LoadThreads(int subjectId)
+        public List<TopicThreadViewModel> LoadThreads(int topicId)
         {
-            var threadsAndSubjects = _context.Thread
-                                    .Where(thread => thread.TopicReferenceId == subjectId)
+            var threadsAndTopics = _context.Thread
+                                    .Where(thread => thread.TopicReferenceId == topicId)
                                     .Join(
                                         _context.Topic,
                                         thread => thread.TopicReferenceId,
-                                        subject => subject.Id,
-                                        (thread, subject) => new TopicThreadViewModel
+                                        topic => topic.Id,
+                                        (thread, topic) => new TopicThreadViewModel
                                         {
                                            
                                             ThreadId = thread.Id,
                                             ThreadHeading = thread.Heading,
-                                            TopicReferenceId = subject.Id,
+                                            TopicReferenceId = topic.Id,
                                         }
                                     )
                                     .ToList(); 
 
-            return threadsAndSubjects;
+            return threadsAndTopics;
+        }
+
+        // retrieves a list of posts and their associated thread information
+        // for a given thread ID joins the posts with their respective
+        // threads to form a combined ThreadPostViewModel,
+        // and returns the combined list
+        public List<ThreadPostViewModel> LoadPosts(int threadId)
+        {
+            var postAndThread = _context.Post
+                                    .Where(post => post.ThreadReferenceId == threadId)
+                                    .Join(
+                                        _context.Thread,
+                                        post => post.ThreadReferenceId,
+                                        thread => thread.Id,
+                                        (post, thread) => new ThreadPostViewModel
+                                        {
+                                           
+                                            PostId = thread.Id,
+                                            PostTitle = post.Title,
+                                            TextBody = post.TextBody,
+                                            ThreadReferenceId = thread.Id,
+                                            ThreadHeading = thread.Heading,
+                                        }
+                                    )
+                                    .ToList(); 
+
+            return postAndThread;
+        }
+
+        public void AddThreadPost(Models.Thread newThread, Post newThreadPost)
+        {
+            // Set the relationship between Thread and Post
+            newThread.Posts = new List<Post> { newThreadPost };
+            newThreadPost.Thread = newThread;
+
+            _context.Post.Add(newThreadPost);
+            _context.Thread.Add(newThread);
+            _context.SaveChanges();
         }
     }
 }

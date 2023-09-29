@@ -25,11 +25,11 @@ namespace Forum.Controllers
 
             List<TopicThreadViewModel> threads = dbHelper.LoadThreads(id);
 
-            List<TopicViewModel> subjects = dbHelper.LoadTopics();
+            List<TopicViewModel> topics = dbHelper.LoadTopics();
 
-            var subject = subjects.Where(subject => subject.Id == id).FirstOrDefault();
+            var topic = topics.Where(topic => topic.Id == id).FirstOrDefault();
 
-            ViewBag.SubjectTitle = subject.Title;
+            ViewBag.TopicTitle = topic.Title;
 
             return View(threads);
         }
