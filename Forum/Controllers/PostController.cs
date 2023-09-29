@@ -53,6 +53,7 @@ namespace Forum.Controllers
                 }
                 return RedirectToAction("Index", "Thread", new { id = post.ThreadReferenceId });
             }
+
             var errors = ModelState
     .Where(x => x.Value.Errors.Count > 0)
     .Select(x => new { x.Key, x.Value.Errors })
