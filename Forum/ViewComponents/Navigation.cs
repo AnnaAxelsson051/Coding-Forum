@@ -1,5 +1,7 @@
 ﻿using System;
 using Forum.Models;
+using Forum.Models.Helper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Forum.ViewComponents
@@ -9,7 +11,7 @@ namespace Forum.ViewComponents
    //be invoked from a view.
 
 
-    public class Navigation 
+    public class Navigation : ViewComponent
 	{
         private readonly DataContext _context;
 
@@ -17,6 +19,23 @@ namespace Forum.ViewComponents
         {
             _context = context;
         }
+
+        public IViewComponentResult Invoke()
+        {
+            var dbHelper = new DBhelper(_context);
+            List<TopicViewModel> topics = dbHelper.LoadTopics();
+
+            return View(topics);
+        }
     }
 }
+/*
+private readonly DataContext _context;
+
+public Navigation(DataContext context)
+{
+    _context = context;
+}
+}
+}*/
 
