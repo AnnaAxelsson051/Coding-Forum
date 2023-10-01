@@ -29,13 +29,5 @@ namespace Forum.ViewComponents
         }
     }
 }
-/*
-private readonly DataContext _context;
 
-public Navigation(DataContext context)
-{
-    _context = context;
-}
-}
-}*/
 

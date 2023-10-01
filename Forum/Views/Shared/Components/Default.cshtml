@@ -1,10 +1,14 @@
-﻿
+﻿@*iterates over a collection of TopicViewModel items and renders a list of navigation
+    links with associated icons for each topic*@
 
 @model IEnumerable<TopicViewModel>
 
 @foreach (var item in Model)
 {
     <li class="nav-item">
-      
+        <a class="nav-link" href="@Url.Action("Index", "Topic", new { id = item.Id })">
+            <i class="fa-light fa-comments"></i>
+            @Html.DisplayFor(modelItem => item.Title)
+        </a>
     </li>
 }
