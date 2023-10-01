@@ -7,8 +7,6 @@ using Forum.Models;
 using Forum.Models.Helper;
 using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace Forum.Controllers
 {
     public class ThreadController : Controller
@@ -21,21 +19,14 @@ namespace Forum.Controllers
             _context = context;
         }
 
-        public ActionResult Create()
-        {
-            return View();
-        }
 
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
+        // Retrieves all posts for a specified thread from the db,
+        // sets the threads heading to the ViewBag and returns a
+        // view displaying these posts
         public ActionResult Index(int id)
         {
             var dbHelper = new DBhelper(_context);
 
-            // Gets post in thread
             List<ThreadPostViewModel> posts = dbHelper.LoadPosts(id);
 
             var thread = posts.Where(post => post.ThreadReferenceId == id).FirstOrDefault();
@@ -45,13 +36,24 @@ namespace Forum.Controllers
             return View(posts);
         }
 
+        public ActionResult Details(int id)
+        {
+            return View();
+        }
+
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+
         // attempts to create a new thread and an associated post in the
         // database if successful redirects to the topic index page
         // else to an error page
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Add(TopicThreadViewModel thread)
+        public ActionResult Create(TopicThreadViewModel thread)
         {
             var dbHelper = new DBhelper(_context);
 
@@ -82,11 +84,11 @@ namespace Forum.Controllers
                 return RedirectToAction("Index", "Topic", new { id = thread.TopicReferenceId });
             }
             var errors = ModelState
-            .Where(x => x.Value.Errors.Count > 0)
-            .Select(x => new { x.Key, x.Value.Errors })
+            .Where(modelStateEntry => modelStateEntry.Value.Errors.Count > 0)
+            .Select(modelStateEntry => new { modelStateEntry.Key, modelStateEntry.Value.Errors })
             .ToArray();
 
-            Debug.WriteLine(errors + "Error");
+            Debug.WriteLine("Validation Errors occured in Create Method: " + errors);
             return RedirectToAction("Error", "Home");
         }
     }

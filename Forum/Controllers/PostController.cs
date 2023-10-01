@@ -25,9 +25,12 @@ namespace Forum.Controllers
         {
             return View();
         }
-   
+
+        // Validates and adds a new post to the database
+        // if successful redirects to the thread's index
+        // otherwise logs errors and redirects to the home error page
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken] // Preventing cross-site request forgery attacks
         public ActionResult AddPost(ThreadPostViewModel post)
         {
             var dbHelper = new DBhelper(_context);
@@ -42,24 +45,25 @@ namespace Forum.Controllers
                 };
                 try
                 {
-
-                    dbHelper.AddPost(newPost);
-
+                  dbHelper.AddPost(newPost);
                 }
                 catch (Exception ex)
                 {
                     Debug.WriteLine(ex.Message);
                     throw;
                 }
-                return RedirectToAction("Index", "Thread", new { id = post.ThreadReferenceId });
+                return RedirectToAction("Index", "Thread", new {
+                    id = post.ThreadReferenceId
+                });
+
             }
 
             var errors = ModelState
-    .Where(x => x.Value.Errors.Count > 0)
-    .Select(x => new { x.Key, x.Value.Errors })
-    .ToArray();
+            .Where(modelStateEntry => modelStateEntry.Value.Errors.Count > 0)
+            .Select(modelStateEntry => new { modelStateEntry.Key, modelStateEntry.Value.Errors })
+            .ToArray();
 
-            Debug.WriteLine(errors + "Errors occured");
+            Debug.WriteLine("Validation Errors occured in AddPost Method: " + errors);
             return RedirectToAction("Error", "Home");
         }
 

@@ -19,6 +19,10 @@ namespace Forum.Controllers
             _context = context;
         }
 
+        // Retrieves a list of threads for a given topic and a list of all topics from the db
+        // Finds the topic with the provided ID and sets its title to the ViewBag
+        // Returns a view displaying the list of threads for the specified topic
+
         public IActionResult Index(int id)
         {
             var dbHelper = new DBhelper(_context);
