@@ -23,6 +23,8 @@
     <None Remove="Views\Shared\Components\" />
     <None Remove="Views\Topic\" />
     <None Remove="Views\Thread\" />
+    <None Remove="Models\ViewModels\" />
+    <None Remove="Data\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewComponents\" />
@@ -31,6 +33,8 @@
     <Folder Include="Views\Topic\" />
     <Folder Include="Views\Thread\" />
     <Folder Include="wwwroot\images\" />
+    <Folder Include="Models\ViewModels\" />
+    <Folder Include="Data\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\images\" />

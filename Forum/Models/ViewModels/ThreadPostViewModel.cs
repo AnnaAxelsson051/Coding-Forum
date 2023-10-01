@@ -7,6 +7,7 @@ namespace Forum.Models
 {
 	public class ThreadPostViewModel
 	{
+        [AllowNull]
         public string? ThreadHeading { get; set; }
 
         [DisplayName("Post Title")]
