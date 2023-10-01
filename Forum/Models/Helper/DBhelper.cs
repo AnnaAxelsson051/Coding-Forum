@@ -1,4 +1,7 @@
 ﻿using System;
+using Microsoft.Extensions.Hosting;
+using System.Threading;
+
 namespace Forum.Models.Helper
 {
 	public class DBhelper
@@ -8,12 +11,6 @@ namespace Forum.Models.Helper
         public DBhelper(DataContext context)
         {
             _context = context;
-        }
-
-        public void AddPost(Post newpost)
-        {
-            _context.Post.Add(newpost);
-            _context.SaveChanges();
         }
 
         // retrieves a list of topics from the database and maps
@@ -87,9 +84,54 @@ namespace Forum.Models.Helper
             return postAndThread;
         }
 
+        // Retrieves a post by its postId from the db, updates its 
+        // textBody and optionally its title, and then saves the changes to db
+
+        public void EditPost(int postId, string textBody, string? title)
+        {
+            Post post = (from item in _context.Post
+                         where item.Id == postId
+                         select item).First();
+            post.TextBody = textBody;
+            if (title != null)
+                post.Title = title;
+            _context.SaveChanges();
+        }
+
+        // Updates the heading of a specific thread in db
+        public void EditThread(int threadId, string heading)
+        {
+            Models.Thread thread = (from item in _context.Thread
+                                    where item.Id == threadId
+                                    select item).First();
+            thread.Heading = heading;
+            _context.SaveChanges();
+        }
+
+        // Updates the title of a specific topic in db
+        public void EditTopic(int topicId, string title)
+        {
+            Topic topic = (from item in _context.Topic
+                               where item.Id == topicId
+                               select item).First();
+            topic.Title = title;
+            _context.SaveChanges();
+        }
+
+        public void AddPost(Post newpost)
+        {
+            _context.Post.Add(newpost);
+            _context.SaveChanges();
+        }
+        public void AddThread(Models.Thread newThread)
+        {
+            _context.Thread.Add(newThread);
+            _context.SaveChanges();
+        }
+
+        // Adds a new thread and its associated post to db
         public void AddThreadPost(Models.Thread newThread, Post newThreadPost)
         {
-            // Set the relationship between Thread and Post
             newThread.Posts = new List<Post> { newThreadPost };
             newThreadPost.Thread = newThread;
 
