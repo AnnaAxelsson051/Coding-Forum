@@ -91,6 +91,58 @@ namespace Forum.Controllers
             Debug.WriteLine("Validation Errors occured in Create Method: " + errors);
             return RedirectToAction("Error", "Home");
         }
+
+        public ActionResult Edit(int id)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, IFormCollection collection)
+        {
+            try
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        public ActionResult Delete(int id)
+        {
+            return View();
+        }
+
+
+        // Attempts to delete a post with a specified ID from the db
+        // and then redirects to the Index action
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int id, IFormCollection collection)
+        {
+            try
+            {
+                var postToDelete = _context.Post.Find(id);
+
+                if (postToDelete == null)
+                {
+                      return NotFound();
+                }
+
+                  _context.Post.Remove(postToDelete);
+
+                _context.SaveChanges();
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
     }
 }
 
