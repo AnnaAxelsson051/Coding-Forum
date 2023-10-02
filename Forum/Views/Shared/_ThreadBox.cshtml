@@ -1,5 +1,13 @@
 ﻿@model TopicThreadViewModel;
 
 <div class="forum-thread">
- 
+    <a class="post-link" asp-controller="Thread" asp-action="Index" asp-route-id="@Model.ThreadId">
+        <div class="inner-container">
+            <div class="topic">
+
+                <div class="post-title">@Model.ThreadHeading</div>
+
+            </div>
+        </div>
+    </a>
 </div>

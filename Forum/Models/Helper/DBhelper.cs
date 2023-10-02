@@ -19,16 +19,16 @@ namespace Forum.Models.Helper
        
         public List<TopicViewModel> LoadTopics()
         {
-            var subjects = _context.Topic
-                .Select(subject => new TopicViewModel
-                {
-                    Id = subject.Id,
-                    Title = subject.Title,
+            var topics = _context.Topic
+                .Select(topic => new TopicViewModel
+              {
+                    Id = topic.Id,
+                   Title = topic.Title,
                 }
             )
             .ToList();
 
-            return subjects;
+            return topics;
         }
 
         // retrieves a list of threads associated with a given subjectId

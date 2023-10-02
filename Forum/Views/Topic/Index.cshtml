@@ -1,1 +1,36 @@
 ﻿@model List<TopicThreadViewModel>;
+
+@{
+    int currentTopicId = 0;
+
+    if (Model.Any())
+    {
+        currentTopicId = Model[0].TopicReferenceId;
+    }
+
+}
+
+<div class="forum">
+
+    <div class="forum-header">
+        <h1>@ViewBag.TopicTitle</h1>
+    </div>
+
+    <div class="forum-sub-header">
+        <h5>Skapa en ny tråd</h5>
+    </div>
+
+    @Html.Partial("_CreateThread", new TopicThreadViewModel { TopicReferenceId = currentTopicId })
+
+    <div class="forum-sub-header">
+        <h4>Threads</h4>
+        <p>Sort by oldest first</p>
+    </div>
+
+    @foreach (var thread in Model)
+    {
+        @Html.Partial("_ThreadBox", thread)
+
+    }
+
+</div>
