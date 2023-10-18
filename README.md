@@ -14,7 +14,7 @@ A user-friendly web forum built with ASP.NET and Razor featuring hard-coded codi
 
 ---
 
-## Technologies Used
+## Technologies used
 
 - ASP.NET
 - C#
